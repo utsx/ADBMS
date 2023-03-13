@@ -9,13 +9,20 @@ DECLARE
     row_num                int;
     constraint_name        text;
     constraint_type        text;
+    schema_name_buff       text;
+    schema_name_access     text;
     column_name            text;
+    oid_schema             integer;
     table_name             text;
     referenced_table       text;
     referenced_column_name text;
     referenced_column      text;
 BEGIN
-    ans := '';
+    SELECT oid INTO oid_schema FROM pg_namespace WHERE nspname = schema_name;
+    IF oid_schema IS NULL THEN
+        RAISE EXCEPTION 'Схемы не существуюет/';
+    END IF;
+     ans := '';
     line := '';
     row_num := 1;
     ans := E'\n' || ans ||
@@ -63,3 +70,12 @@ BEGIN
 END;
 $$;
 
+CREATE TABLE test(
+    id integer primary key
+
+);
+CREATE TABLE test2(
+    id integer primary key,
+    id_test integer,
+    FOREIGN KEY (id_test) REFERENCES test (id)
+);
