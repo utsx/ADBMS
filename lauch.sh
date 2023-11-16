@@ -1,6 +1,6 @@
 #!/bin/bash
 PGUSER=s309552
-PGPASSWORD=I5nWI16akJHsFp8A
+PGPASSWORD=*
 PGDATABASE=studs
 PGHOST=localhost
 
